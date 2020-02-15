@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fayou.dao.IAccountDao">
+
+
+
+    <!--type = com.fayou.domain.Account-->
+    <resultMap id="accountUserMap" type="account">
+        <!--column是数据库select出来那个table上面的名称-->
+        <id property="id" column="aid"/>
+        <result property="uid" column="uid"/>
+        <result property="money" column="money"/>
+
+        <!--延迟加载column中的参数为select查询条件的参数-->
+        <association property="user" column="uid" javaType="com.fayou.domain.User" select="com.fayou.dao.IUserDao.findById">
+            <id property="userId" column="id"/>
+            <result property="userName" column="username"/>
+            <result property="userBirthday" column="birthday"/>
+            <result property="userSex" column="sex"/>
+            <result property="userAddress" column="address"/>
+        </association>
+
+    </resultMap>
+
+    <select id="findAll" resultMap="accountUserMap">
+        <!-- select u.*,a.id as aid,a.UID,a.money from account a,user u where a.uid = u.id;-->
+       select * from account
+    </select>
+</mapper>
