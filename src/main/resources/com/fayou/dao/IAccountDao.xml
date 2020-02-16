@@ -14,7 +14,8 @@
         <result property="uid" column="uid"/>
         <result property="money" column="money"/>
 
-        <!--延迟加载column中的参数为select查询条件的参数-->
+        <!--延迟加载column中的参数为主表中和从表关联的字段，理解为把column的值复制给select参数
+        。上面的理解为把column赋值给property-->
         <association property="user" column="uid" javaType="com.fayou.domain.User" select="com.fayou.dao.IUserDao.findById">
             <id property="userId" column="id"/>
             <result property="userName" column="username"/>
